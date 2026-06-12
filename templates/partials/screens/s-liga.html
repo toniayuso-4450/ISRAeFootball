@@ -1,0 +1,136 @@
+<div class="screen" id="s-liga">
+<button class="back-btn" onclick="go('s-espana')">◀ Volver</button>
+<div class="sec-hdr"><img class="sec-ico comp-logo" src="/static/img/comp/liga-ea.png" alt="Liga EA Sports"/><h2>Liga EA Sports</h2></div>
+<div class="submenu-list">
+  <div class="submenu-card sc-liga-ea sc-brand-shell" onclick="go('s-liga-clas')">
+    <span class="sc-emoji">📊</span><span class="sc-label">Clasificación</span><span class="sc-arr">▶</span>
+  </div>
+
+  <div class="submenu-card sc-liga-ea sc-brand-shell ea-box-card" onclick="toggleEaBox()">
+    <span class="sc-emoji">🎮</span><span class="sc-label">Caja EA SPORT</span><span class="sc-arr" id="ea-box-arr">▼</span>
+  </div>
+  <div class="ea-box-panel" id="ea-box-panel" style="display:none;">
+    <label class="ea-box-label" for="ea-jornada-select">Jornada</label>
+    <select id="ea-jornada-select" class="ea-box-select" onchange="renderEaJornada(this.value)"></select>
+    <div class="ea-matches" id="ea-box-matches"></div>
+  </div>
+</div>
+</div>
+<script>
+(function(){
+  function getJornadaMatches(j){
+    var block = document.getElementById('cal-l'+j);
+    if(!block) return [];
+    var cards = [];
+    block.querySelectorAll('.match-live-wrap').forEach(function(w){
+      var names = w.querySelectorAll('.ml-team .ml-team-name');
+      var a = (names[0]||{}).textContent || 'Por definir';
+      var b = (names[1]||{}).textContent || 'Por definir';
+      var matchKey = (w.id||'').replace('mlw-','');
+      cards.push({home:a.trim(),away:b.trim(),kind:w.classList.contains('hvh')?'hvh':'hvia',matchKey:matchKey});
+    });
+    block.querySelectorAll(':scope > .mrow').forEach(function(row){
+      var names = row.querySelectorAll('.mn');
+      if(names.length<2) return;
+      cards.push({home:names[0].textContent.trim(),away:names[1].textContent.trim(),kind:'ia'});
+    });
+    return cards.sort(function(x,y){ var p={ia:0,hvia:1,hvh:1}; return p[x.kind]-p[y.kind]; });
+  }
+
+  window.toggleEaBox = function(){
+    var panel = document.getElementById('ea-box-panel');
+    var arr = document.getElementById('ea-box-arr');
+    if(!panel) return;
+    var open = panel.style.display !== 'none';
+    panel.style.display = open ? 'none' : 'block';
+    if(arr) arr.textContent = open ? '▼' : '▲';
+    if(!open && !document.getElementById('ea-jornada-select').options.length){
+      var sel = document.getElementById('ea-jornada-select');
+      for(var i=1;i<=38;i++){ var o=document.createElement('option'); o.value=i; o.textContent='Jornada '+i; sel.appendChild(o); }
+      renderEaJornada('1');
+    }
+  };
+
+  window.renderEaJornada = function(j){
+    var cont = document.getElementById('ea-box-matches');
+    if(!cont) return;
+    var matches = getJornadaMatches(j);
+    cont.innerHTML = matches.length ? matches.map(function(m){
+      var isHuman = m.kind !== 'ia';
+      return '<div class="ea-match-card '+(isHuman?'human':'ia')+'">'
+        + '<div class="ea-match-top"><strong>'+m.home+'</strong><span>vs</span><strong>'+m.away+'</strong></div>'
+        + '<div class="ea-match-meta">'+(m.kind==='ia'?'IA vs IA · Simulación rápida':'IA/Humano · Formato detallado')+'</div>'
+        + (isHuman?'<button class="ea-previa-btn" onclick="openEaPrevia(\''+m.matchKey+'\',\''+m.home.replace(/'/g,'&#39;')+'\',\''+m.away.replace(/'/g,'&#39;')+'\')">PREVIA</button>':'')
+        + '</div>';
+    }).join('') : '<div class="ea-match-card">Sin partidos cargados para esta jornada.</div>';
+  };
+
+  window.openEaPrevia = function(matchKey,home,away){
+    var ov = document.getElementById('ea-previa-overlay');
+    if(!ov){
+      ov = document.createElement('div');
+      ov.id='ea-previa-overlay'; ov.className='ea-previa-overlay';
+      ov.innerHTML='<div class="ea-previa-full">'
+        + '<button class="ea-previa-back" onclick="closeEaPrevia()">↩ Volver</button>'
+        + '<div class="ea-previa-header"><div class="ea-shield"></div><div class="ea-score">0 - 0 · 00:00 · 📺 Twitch/Directo</div><div class="ea-shield"></div></div>'
+        + '<div class="ea-med-panels"><div id="ea-med-home" class="ea-med-card"></div><div id="ea-med-away" class="ea-med-card"></div></div>'
+        + '<div class="ea-config"><h4>📋 CONFIG. PARTIDO</h4><div id="ea-config-list" class="ea-config-list"></div><button id="ea-config-all" class="ea-config-all" type="button">☑ MARCA TODOS LOS AJUSTES</button></div>'
+        + '<div class="ea-timeline"><h4>Línea de Tiempo</h4><div id="ea-tl-list">Sin eventos todavía.</div></div>'
+        + '<div class="ea-actions"><button onclick="alert(\'Función de eventos disponible en el sistema actual.\')">＋ AÑADIR EVENTO</button><button>🏁 FINALIZAR</button></div>'
+        + '</div>';
+      document.body.appendChild(ov);
+    }
+    ov.classList.add('show');
+    var shields = ov.querySelectorAll('.ea-shield');
+    shields[0].textContent = home; shields[1].textContent = away;
+    function setMed(id, sample){
+      var el=document.getElementById(id);
+      el.innerHTML='<h4>🚑 PARTE MÉDICO Y DISCIPLINARIO</h4><div>'+(sample||'Plantilla disponible al 100%')+'</div>';
+    }
+    function renderConfigChecklist(){
+      var list=document.getElementById('ea-config-list');
+      if(!list) return;
+      var base=[
+        ['🏟️','Estadio','eFootball Stadium'],
+        ['🍂','Estación','Verano'],
+        ['☀️','Tiempo','Soleado'],
+        ['⚽','Balón',"Ligue 1 McDonald's"],
+        ['🎮','Nivel','Crack'],
+        ['⬆️','Forma Tuya','Excelente'],
+        ['➡️','Forma Rival','Normal'],
+        ['⏱️','Duración','10 min vs Humano'],
+        ['🧿','Prórroga y Penaltis','Sí'],
+        ['🔁','Sustituciones','6'],
+        ['🪟','Ventanas','6'],
+        ['➕','+1 cambio Prórroga','Sí']
+      ];
+      list.innerHTML=base.map(function(item,idx){
+        return '<label class="ea-config-row">'
+          + '<span class="ea-config-l"><span class="ea-config-ico">'+item[0]+'</span>'+item[1]+'</span>'
+          + '<span class="ea-config-v">'+item[2]+'</span>'
+          + '<input type="checkbox" class="ea-config-check" data-ea-config="'+idx+'">'
+          + '</label>';
+      }).join('');
+
+      var allBtn=document.getElementById('ea-config-all');
+      function updateAllState(){
+        var checks=list.querySelectorAll('.ea-config-check');
+        var done=checks.length>0 && Array.prototype.every.call(checks,function(c){ return c.checked; });
+        allBtn.classList.toggle('done', done);
+      }
+      list.querySelectorAll('.ea-config-check').forEach(function(chk){ chk.addEventListener('change', updateAllState); });
+      if(allBtn){
+        allBtn.onclick=function(){
+          list.querySelectorAll('.ea-config-check').forEach(function(chk){ chk.checked=true; });
+          updateAllState();
+        };
+      }
+      updateAllState();
+    }
+    setMed('ea-med-home', matchKey==='j1m1' ? '🟨/🟥 Carvajal · 2 part.<br>🚑 Mendy · Esguince tobillo · 1 part.' : '');
+    setMed('ea-med-away','');
+    renderConfigChecklist();
+  };
+  window.closeEaPrevia = function(){ var ov=document.getElementById('ea-previa-overlay'); if(ov) ov.classList.remove('show'); };
+})();
+</script>

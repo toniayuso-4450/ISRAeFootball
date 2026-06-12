@@ -1,0 +1,31 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liga Hypermotion</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Oswald:wght@300;400;600;700&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body{margin:0;background:radial-gradient(circle at top left,rgba(240,192,64,.08),transparent 30%),linear-gradient(90deg,#05070b 0%,#070b13 40%,#040914 100%);color:#fff;font-family:Rajdhani,sans-serif;min-height:100vh}
+        .page{max-width:1100px;margin:0 auto;padding:16px 14px 32px}.back{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:12px;background:#101722;border:1px solid rgba(255,255,255,.08);color:#fff;text-decoration:none;font-family:Oswald,sans-serif;letter-spacing:1px;margin-bottom:10px}
+        .sec-hdr{display:flex;align-items:center;gap:12px;padding:0 6px 10px;border-bottom:1px solid rgba(240,192,64,.25);margin-bottom:14px}.sec-hdr h2{margin:0;font-family:Oswald,sans-serif;letter-spacing:1.5px;color:#f0c040;font-size:18px}
+        .submenu-list{display:grid;gap:12px}.submenu-card{display:flex;align-items:center;gap:14px;padding:18px 18px;border-radius:16px;border:1px solid rgba(255,255,255,.1);background:linear-gradient(135deg,#0b1b2c,#13273f,#1c3d5d,#13273f,#0b1b2c);text-decoration:none;color:#fff;box-shadow:0 8px 26px rgba(0,0,0,.28)}
+        .submenu-card:hover{filter:brightness(1.08)}.sc-emoji{font-size:24px}.sc-label{font-family:Oswald,sans-serif;font-size:18px;letter-spacing:1px}.sc-arr{margin-left:auto;color:#f0c040;font-family:'Bebas Neue',sans-serif;font-size:24px}
+        .mini{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}.mini a{display:inline-flex;align-items:center;gap:6px;padding:8px 12px;border-radius:12px;background:#101722;border:1px solid rgba(255,255,255,.08);color:#dce7ff;text-decoration:none;font-family:Oswald,sans-serif;font-size:12px;letter-spacing:1px;text-transform:uppercase}
+    </style>
+</head>
+<body>
+    <a href="/" aria-label="Ir al inicio" style="position:fixed;top:10px;left:50%;transform:translateX(-50%);width:38px;height:38px;display:flex;align-items:center;justify-content:center;background:#111;border:1px solid #f0c040;border-radius:8px;color:#fff;text-decoration:none;z-index:5000;box-shadow:0 4px 12px rgba(0,0,0,.35);">🏠</a>
+
+<div class="page">
+    <a class="back" href="/">◀ Inicio</a>
+    <div class="sec-hdr"><span style="font-size:22px">🏆</span><h2>Liga Hypermotion</h2></div>
+    <div class="submenu-list">
+        <a class="submenu-card" href="/segunda/clasificacion"><span class="sc-emoji">📊</span><span class="sc-label">Clasificación</span><span class="sc-arr">▶</span></a>
+        <a class="submenu-card" href="/segunda/estadisticas"><span class="sc-emoji">📈</span><span class="sc-label">Estadísticas</span><span class="sc-arr">▶</span></a>
+    </div>
+    <div class="mini"><a href="/segunda/reiniciar">🗑 Reiniciar Segunda</a></div>
+</div>
+</body>
+</html>

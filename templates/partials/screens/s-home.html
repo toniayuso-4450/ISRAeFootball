@@ -1,0 +1,295 @@
+<div class="screen" id="s-home">
+  <div class="bayern-hub" id="bayern-hub-root">
+    <header class="bayern-hud">
+      <div class="hud-item">
+        <span class="hud-ico">💶</span>
+        <div>
+          <p class="hud-label">Presupuesto</p>
+          <p class="hud-value" id="hud-budget">0000 / 1300€</p>
+        </div>
+      </div>
+      <div class="hud-item">
+        <span class="hud-ico">💼</span>
+        <div>
+          <p class="hud-label">Valoración del Mánager</p>
+          <p class="hud-value" id="hud-rating">0.00 / 9.10€</p>
+        </div>
+      </div>
+      <div class="hud-item hud-med" id="hud-medical-pill" title="Estado médico">
+        <span class="hud-ico">💊</span>
+        <p class="hud-label">Parte médico</p>
+      </div>
+    </header>
+
+    <section class="hub-main-grid">
+      <button class="hub-card" onclick="go('s-bayern-trofeos')">
+        <span class="hub-title">🏆 Vitrina de Trofeos</span>
+        <span class="hub-sub">2 títulos oficiales</span>
+        <div class="hub-trophy-logos">
+          <img src="https://upload.wikimedia.org/wikipedia/en/9/9e/FIFA_Club_World_Cup_logo.svg" alt="FIFA Club World Cup">
+          <img src="/static/img/logos/spain_supercopa-de-espana.football-logos.cc.svg" alt="Supercopa de España">
+        </div>
+      </button>
+
+      <button class="hub-card" onclick="go('s-bayern-derbys')">
+        <span class="hub-title">👤 Histórico Derbys</span>
+        <span class="hub-sub">Récord: 5W - 2D - 1L</span>
+      </button>
+
+      <button class="hub-card" onclick="go('s-bayern-objetivos')">
+        <span class="hub-title">🎯 Objetivos del Club</span>
+        <span class="hub-sub">Progreso: 2 / 33</span>
+      </button>
+
+      <button class="hub-card" onclick="go('s-bayern-plantilla')">
+        <span class="hub-title">👕 Plantilla</span>
+        <span class="hub-sub">31 jugadores · gestión completa</span>
+      </button>
+    </section>
+
+    <section class="hub-match-engine">
+      <div class="hub-fixture">
+        <p class="fixture-label">Próximo partido</p>
+        <p class="fixture-value" id="hub-next-match">Amistoso · Bayern vs Osasuna</p>
+        <p class="fixture-injury" id="hub-injury-warning"></p>
+      </div>
+      <div class="hub-actions">
+        <button class="btn-play" id="hub-play-btn">⚽ JUGAR PARTIDO</button>
+        <button class="btn-next" id="hub-next-day-btn">➡️ SIGUIENTE DÍA</button>
+      </div>
+    </section>
+  </div>
+</div>
+
+<div class="screen" id="s-bayern-trofeos">
+  <button class="back-btn" onclick="go('s-home')">◀ Volver</button>
+  <div class="sec-hdr"><span class="sec-emoji">🏆</span><h2>Vitrina de Trofeos</h2></div>
+  <div class="hub-screen-card">
+    <p>Galería oficial desbloqueada con render 3D de FIFA Club World Cup y Supercopa de España.</p>
+    <div class="hub-trophy-logos">
+      <img src="https://upload.wikimedia.org/wikipedia/en/9/9e/FIFA_Club_World_Cup_logo.svg" alt="FIFA Club World Cup">
+      <img src="/static/img/logos/spain_supercopa-de-espana.football-logos.cc.svg" alt="Supercopa de España">
+    </div>
+  </div>
+</div>
+
+<div class="screen" id="s-bayern-derbys">
+  <button class="back-btn" onclick="go('s-home')">◀ Volver</button>
+  <div class="sec-hdr"><span class="sec-emoji">👤</span><h2>Histórico Derbys</h2></div>
+  <div class="hub-screen-card">Win Rate global: <b>62.5%</b> · Récord consolidado <b>5W - 2D - 1L</b>.</div>
+</div>
+
+<div class="screen" id="s-bayern-objetivos">
+  <button class="back-btn" onclick="go('s-home')">◀ Volver</button>
+  <div class="sec-hdr"><span class="sec-emoji">🎯</span><h2>Objetivos del Club</h2></div>
+  <div class="hub-screen-card">Seguimiento activo de <b>33</b> misiones con filtros por completado y pendiente (avance actual: <b>2/33</b>).</div>
+</div>
+
+<style>
+  .bayern-hub{background:radial-gradient(circle at 20% 0,#0066b255,#00162f 46%,#12000a 100%),linear-gradient(145deg,#dc052d,#8e001c 58%,#002f63);padding:12px;border-radius:12px;display:flex;flex-direction:column;gap:12px}
+  .bayern-hud{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;position:sticky;top:0;z-index:4}
+  .hud-item{background:rgba(5,8,24,.74);border:1px solid rgba(255,255,255,.18);border-radius:10px;padding:8px;display:flex;align-items:center;gap:8px;color:#fff}
+  .hud-label{margin:0;font-size:10px;letter-spacing:.8px;opacity:.86}
+  .hud-value{margin:0;font-size:13px;font-weight:700;color:#fff6d5}
+  .hud-med{justify-content:center;flex-direction:column;gap:4px}
+  .hud-med.blink{animation:blinkMed .9s ease-in-out infinite;background:rgba(220,5,45,.38)}
+  @keyframes blinkMed{50%{box-shadow:0 0 0 2px rgba(255,214,10,.45),0 0 14px rgba(255,214,10,.5)}}
+  .hub-main-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .hub-card{min-height:110px;background:linear-gradient(160deg,rgba(0,0,0,.58),rgba(0,0,0,.36));border:1px solid rgba(255,255,255,.2);border-radius:12px;padding:10px;color:#fff;text-align:left;display:flex;flex-direction:column;justify-content:space-between;gap:8px}
+  .hub-title{font-weight:700;font-size:14px;color:#fff}
+  .hub-sub{font-size:12px;color:#ffe4a8}
+  .hub-trophy-logos{display:flex;gap:8px;align-items:center}
+  .hub-trophy-logos img{width:32px;height:32px;object-fit:contain;background:#ffffffd8;border-radius:8px;padding:3px}
+  .hub-match-engine{background:rgba(0,0,0,.42);border:1px solid rgba(255,255,255,.16);border-radius:12px;padding:10px;display:flex;flex-direction:column;gap:10px}
+  .fixture-label{margin:0;font-size:11px;color:#f6f6f6}
+  .fixture-value{margin:0;font-size:14px;color:#fff;font-weight:700}
+  .fixture-injury{margin:0;font-size:11px;color:#ffb86c;min-height:14px}
+  .hub-actions{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:end}
+  .btn-play,.btn-next{border:none;border-radius:10px;padding:10px 12px;font-weight:700;color:#fff}
+  .btn-play{background:linear-gradient(145deg,#f8c44e,#b88915);box-shadow:0 0 12px rgba(255,198,77,.45)}
+  .btn-next{background:linear-gradient(145deg,#a3aab6,#5f6878)}
+  .hub-screen-card{background:rgba(0,0,0,.35);padding:12px;border-radius:12px;border:1px solid rgba(255,255,255,.16);color:#fff}
+  .injured-player{color:#ff9f43 !important;font-weight:700}
+</style>
+
+<script>
+(function(){
+  if(window.__BAYERN_HUB_READY) return;
+  window.__BAYERN_HUB_READY = true;
+  var state = { day: 16, month: 'Julio', isMatchday: false, points: 8, injured: null, budgetSpent: 0, rating: 0 };
+  var nextBtn = document.getElementById('hub-next-day-btn');
+  var playBtn = document.getElementById('hub-play-btn');
+  var budgetEl = document.getElementById('hud-budget');
+  var ratingEl = document.getElementById('hud-rating');
+  var medEl = document.getElementById('hud-medical-pill');
+  var matchEl = document.getElementById('hub-next-match');
+  var injuryWarn = document.getElementById('hub-injury-warning');
+
+  function maybeIncident(){
+    var roll = Math.random();
+    if(roll > 0.05) return;
+    var sev = roll < 0.015 ? 'grave' : (roll < 0.03 ? 'media' : 'leve');
+    var conf = {
+      leve: {days:2, pi:2, txt:'Sobrecarga'},
+      media:{days:4, pi:5, txt:'Esguince'},
+      grave:{days:6, pi:10, txt:'Rotura de ligamentos'}
+    }[sev];
+    state.injured = { name: 'Neuer', days: conf.days, cost: conf.pi, txt: conf.txt };
+    state.points = Math.max(0, state.points - conf.pi);
+    medEl.classList.add('blink');
+    alert('🚨 PARTE MÉDICO\n' + state.injured.name + ': ' + conf.txt + ' · baja ' + conf.days + ' partidos. Coste: ' + conf.pi + ' PI.');
+  }
+
+  function updateHud(){
+    budgetEl.textContent = String(state.budgetSpent).padStart(4,'0') + ' / 1300€';
+    ratingEl.textContent = state.rating.toFixed(2) + ' / 9.10€';
+    var dayLabel = state.day + ' ' + state.month;
+    matchEl.textContent = (state.isMatchday ? 'Matchday · Bayern vs Osasuna · ' : 'Entrenamiento · ') + dayLabel;
+    if(state.injured){
+      injuryWarn.textContent = '⚠️ BAJA CONFIRMADA: ' + state.injured.name + ' (' + state.injured.days + ' partidos)';
+    } else {
+      injuryWarn.textContent = '';
+      medEl.classList.remove('blink');
+    }
+  }
+
+  nextBtn.addEventListener('click', function(){
+    if(state.isMatchday){
+      alert('Debes jugar o simular el partido antes de avanzar.');
+      return;
+    }
+    state.day += 1;
+    state.points = Math.min(10, state.points + 1);
+    if(state.injured){ state.injured.days -= 1; if(state.injured.days <= 0) state.injured = null; }
+    state.isMatchday = state.day % 3 === 0;
+    maybeIncident();
+    updateHud();
+  });
+
+  playBtn.addEventListener('click', function(){
+    if(!state.isMatchday){
+      alert('Hoy no hay partido oficial. Usa ➡️ SIGUIENTE DÍA.');
+      return;
+    }
+    state.isMatchday = false;
+    state.rating = Math.min(9.1, state.rating + 0.15);
+    updateHud();
+    alert('Partido completado. Se desbloqueó el siguiente día.');
+  });
+
+  updateHud();
+})();
+</script>
+
+<div class="screen" id="s-agenda">
+<button class="back-btn" onclick="go('s-home')">◀ Volver</button>
+<div class="sec-hdr"><span class="sec-emoji">📅</span><h2>AGENDA 32-33</h2></div>
+
+<div class="ag-season verano">☀️ VERANO · PARTE 1 <span class="ag-section-count">14 EVENTOS</span></div>
+<div class="ag-r ag-amist"><span class="ag-date">15 Jul</span><span class="ag-ico">🤝</span><span class="ag-lbl">Amistoso 1</span><span class="ag-wx">☀️</span></div>
+<div class="ag-r ag-amist"><span class="ag-date">19 Jul</span><span class="ag-ico">🤝</span><span class="ag-lbl">Amistoso 2</span><span class="ag-wx">☀️</span></div>
+<div class="ag-r ag-amist"><span class="ag-date">23 Jul</span><span class="ag-ico">🤝</span><span class="ag-lbl">Amistoso 3</span><span class="ag-wx">☀️</span></div>
+<div class="ag-r ag-amist"><span class="ag-date">27 Jul</span><span class="ag-ico">🤝</span><span class="ag-lbl">Amistoso 4</span><span class="ag-wx">☀️</span></div>
+<div class="ag-r ag-eur ag-rain"><span class="ag-date">03 Ago</span><span class="ag-ico">🔵</span><span class="ag-lbl">Previa Champions — R1 Ida</span><span class="ag-wx">🌧</span></div>
+<div class="ag-r ag-eur"><span class="ag-date">10 Ago</span><span class="ag-ico">🔵</span><span class="ag-lbl">Previa Champions — R1 Vuelta</span><span class="ag-wx">☀️</span></div>
+<div class="ag-r ag-liga"><span class="ag-date">14 Ago</span><span class="ag-ico">⚽</span><span class="ag-lbl">Liga — J1</span><span class="ag-wx">☀️</span></div>
+<div class="ag-r ag-eur"><span class="ag-date">17 Ago</span><span class="ag-ico">🔵</span><span class="ag-lbl">Previa Champions — R2 Ida</span><span class="ag-wx">☀️</span></div>
+<div class="ag-r ag-liga"><span class="ag-date">21 Ago</span><span class="ag-ico">⚽</span><span class="ag-lbl">Liga — J2</span><span class="ag-wx">☀️</span></div>
+<div class="ag-r ag-eur"><span class="ag-date">24 Ago</span><span class="ag-ico">🔵</span><span class="ag-lbl">Previa Champions — R2 Vuelta</span><span class="ag-wx">☀️</span></div>
+<div class="ag-r ag-liga"><span class="ag-date">28 Ago</span><span class="ag-ico">⚽</span><span class="ag-lbl">Liga — J3</span><span class="ag-wx">☀️</span></div>
+<div class="ag-r ag-sel ag-rain"><span class="ag-date">04 Sep</span><span class="ag-ico">🌍</span><span class="ag-lbl">Selecciones — J1</span><span class="ag-wx">🌧</span></div>
+<div class="ag-r ag-sel"><span class="ag-date">07 Sep</span><span class="ag-ico">🌍</span><span class="ag-lbl">Selecciones — J2</span><span class="ag-wx">☀️</span></div>
+<div class="ag-r ag-liga"><span class="ag-date">11 Sep</span><span class="ag-ico">⚽</span><span class="ag-lbl">Liga — J4</span><span class="ag-wx">☀️</span></div>
+
+<div class="ag-season invierno">❄️ INVIERNO <span class="ag-section-count">40 EVENTOS</span></div>
+<div class="ag-r ag-recopa ag-rain"><span class="ag-date">14 Sep</span><span class="ag-ico">🟤</span><span class="ag-lbl">Recopa Europa — 1/64</span><span class="ag-wx">🌧</span></div>
+<div class="ag-r ag-liga"><span class="ag-date">18 Sep</span><span class="ag-ico">⚽</span><span class="ag-lbl">Liga — J5</span><span class="ag-wx">☀️</span></div>
+<div class="ag-r ag-eur"><span class="ag-date">21 Sep</span><span class="ag-ico">🇪🇺</span><span class="ag-lbl">Europa — Grupo J1</span><span class="ag-wx">☀️</span></div>
+<div class="ag-r ag-liga"><span class="ag-date">25 Sep</span><span class="ag-ico">⚽</span><span class="ag-lbl">Liga — J6</span><span class="ag-wx">☀️</span></div>
+<div class="ag-r ag-copa ag-rain"><span class="ag-date">28 Sep</span><span class="ag-ico">🏆</span><span class="ag-lbl">Copa del Rey — 1/128</span><span class="ag-wx">🌧</span></div>
+<div class="ag-r ag-liga"><span class="ag-date">02 Oct</span><span class="ag-ico">⚽</span><span class="ag-lbl">Liga — J7</span><span class="ag-wx">☀️</span></div>
+<div class="ag-r ag-sel"><span class="ag-date">05 Oct</span><span class="ag-ico">🌍</span><span class="ag-lbl">Selecciones — J3</span><span class="ag-wx">☀️</span></div>
+<div class="ag-r ag-sel"><span class="ag-date">09 Oct</span><span class="ag-ico">🌍</span><span class="ag-lbl">Selecciones — J4</span><span class="ag-wx">☀️</span></div>
+<div class="ag-r ag-liga ag-rain"><span class="ag-date">13 Oct</span><span class="ag-ico">⚽</span><span class="ag-lbl">Liga — J8</span><span class="ag-wx">🌧</span></div>
+<div class="ag-r ag-eur"><span class="ag-date">16 Oct</span><span class="ag-ico">🇪🇺</span><span class="ag-lbl">Europa — Grupo J2</span><span class="ag-wx">☀️</span></div>
+<div class="ag-r ag-liga"><span class="ag-date">20 Oct</span><span class="ag-ico">⚽</span><span class="ag-lbl">Liga — J9</span><span class="ag-wx">☀️</span></div>
+<div class="ag-r ag-recopa"><span class="ag-date">23 Oct</span><span class="ag-ico">🟤</span><span class="ag-lbl">Recopa Europa — 1/32</span><span class="ag-wx">☀️</span></div>
+<div class="ag-r ag-liga ag-rain"><span class="ag-date">27 Oct</span><span class="ag-ico">⚽</span><span class="ag-lbl">Liga — J10</span><span class="ag-wx">🌧</span></div>
+<div class="ag-r ag-eur"><span class="ag-date">30 Oct</span><span class="ag-ico">🇪🇺</span><span class="ag-lbl">Europa — Grupo J3</span><span class="ag-wx">☀️</span></div>
+<div class="ag-r ag-liga"><span class="ag-date">03 Nov</span><span class="ag-ico">⚽</span><span class="ag-lbl">Liga — J11</span><span class="ag-wx">☀️</span></div>
+<div class="ag-r ag-copa"><span class="ag-date">06 Nov</span><span class="ag-ico">🏆</span><span class="ag-lbl">Copa del Rey — 1/32</span><span class="ag-wx">☀️</span></div>
+<div class="ag-r ag-liga ag-rain"><span class="ag-date">10 Nov</span><span class="ag-ico">⚽</span><span class="ag-lbl">Liga — J12</span><span class="ag-wx">🌧</span></div>
+<div class="ag-r ag-sel"><span class="ag-date">13 Nov</span><span class="ag-ico">🌍</span><span class="ag-lbl">Selecciones — J5</span><span class="ag-wx">☀️</span></div>
+<div class="ag-r ag-sel"><span class="ag-date">17 Nov</span><span class="ag-ico">🌍</span><span class="ag-lbl">Selecciones — J6</span><span class="ag-wx">☀️</span></div>
+<div class="ag-r ag-liga ag-rain"><span class="ag-date">21 Nov</span><span class="ag-ico">⚽</span><span class="ag-lbl">Liga — J13</span><span class="ag-wx">🌧</span></div>
+<div class="ag-r ag-eur"><span class="ag-date">24 Nov</span><span class="ag-ico">🇪🇺</span><span class="ag-lbl">Europa — Grupo J4</span><span class="ag-wx">☀️</span></div>
+<div class="ag-r ag-liga"><span class="ag-date">28 Nov</span><span class="ag-ico">⚽</span><span class="ag-lbl">Liga — J14</span><span class="ag-wx">☀️</span></div>
+<div class="ag-r ag-inter"><span class="ag-date">01 Dic</span><span class="ag-ico">🟡</span><span class="ag-lbl">Intercontinental — Cuartos (Asia)</span><span class="ag-wx">☀️</span></div>
+<div class="ag-r ag-inter"><span class="ag-date">04 Dic</span><span class="ag-ico">🟡</span><span class="ag-lbl">Intercontinental — Semis (Asia)</span><span class="ag-wx">☀️</span></div>
+<div class="ag-r ag-inter"><span class="ag-date">08 Dic</span><span class="ag-ico">🟡</span><span class="ag-lbl">INTERCONTINENTAL FINAL (Asia)</span><span class="ag-wx">☀️</span></div>
+<div class="ag-r ag-liga ag-snow"><span class="ag-date">12 Dic</span><span class="ag-ico">⚽</span><span class="ag-lbl">Liga — J15</span><span class="ag-wx">❄️</span></div>
+<div class="ag-r ag-eur ag-rain"><span class="ag-date">15 Dic</span><span class="ag-ico">🇪🇺</span><span class="ag-lbl">Europa — Grupo J5</span><span class="ag-wx">🌧</span></div>
+<div class="ag-r ag-liga"><span class="ag-date">19 Dic</span><span class="ag-ico">⚽</span><span class="ag-lbl">Liga — J16</span><span class="ag-wx">☀️</span></div>
+<div class="ag-r ag-recopa"><span class="ag-date">22 Dic</span><span class="ag-ico">🟤</span><span class="ag-lbl">Recopa Europa — Octavos</span><span class="ag-wx">☀️</span></div>
+<div class="ag-r ag-liga ag-snow"><span class="ag-date">05 Ene</span><span class="ag-ico">⚽</span><span class="ag-lbl">Liga — J17</span><span class="ag-wx">❄️</span></div>
+<div class="ag-r ag-eur ag-rain"><span class="ag-date">08 Ene</span><span class="ag-ico">🇪🇺</span><span class="ag-lbl">Europa — Grupo J6</span><span class="ag-wx">🌧</span></div>
+<div class="ag-r ag-liga"><span class="ag-date">12 Ene</span><span class="ag-ico">⚽</span><span class="ag-lbl">Liga — J18</span><span class="ag-wx">☀️</span></div>
+<div class="ag-r ag-copa"><span class="ag-date">15 Ene</span><span class="ag-ico">🏆</span><span class="ag-lbl">Copa del Rey — Octavos Ida</span><span class="ag-wx">☀️</span></div>
+<div class="ag-r ag-liga ag-rain"><span class="ag-date">19 Ene</span><span class="ag-ico">⚽</span><span class="ag-lbl">Liga — J19</span><span class="ag-wx">🌧</span></div>
+<div class="ag-r ag-copa"><span class="ag-date">22 Ene</span><span class="ag-ico">🏆</span><span class="ag-lbl">Copa del Rey — Octavos Vuelta</span><span class="ag-wx">☀️</span></div>
+<div class="ag-r ag-liga"><span class="ag-date">26 Ene</span><span class="ag-ico">⚽</span><span class="ag-lbl">Liga — J20</span><span class="ag-wx">☀️</span></div>
+<div class="ag-r ag-eur ag-rain"><span class="ag-date">29 Ene</span><span class="ag-ico">🇪🇺</span><span class="ag-lbl">Europa — Grupo J7</span><span class="ag-wx">🌧</span></div>
+<div class="ag-r ag-liga ag-snow"><span class="ag-date">02 Feb</span><span class="ag-ico">⚽</span><span class="ag-lbl">Liga — J21</span><span class="ag-wx">❄️</span></div>
+<div class="ag-r ag-eur"><span class="ag-date">05 Feb</span><span class="ag-ico">🇪🇺</span><span class="ag-lbl">Europa — Grupo J8</span><span class="ag-wx">☀️</span></div>
+<div class="ag-r ag-liga"><span class="ag-date">09 Feb</span><span class="ag-ico">⚽</span><span class="ag-lbl">Liga — J22</span><span class="ag-wx">☀️</span></div>
+
+<div class="ag-season verano">☀️ VERANO · PARTE 2 <span class="ag-section-count">39 EVENTOS</span></div>
+<div class="ag-r ag-liga"><span class="ag-date">12 Feb</span><span class="ag-ico">⚽</span><span class="ag-lbl">Liga — J23</span><span class="ag-wx">☀️</span></div>
+<div class="ag-r ag-eur"><span class="ag-date">16 Feb</span><span class="ag-ico">🇪🇺</span><span class="ag-lbl">Europa — Repesca Ida</span><span class="ag-wx">☀️</span></div>
+<div class="ag-r ag-liga ag-rain"><span class="ag-date">19 Feb</span><span class="ag-ico">⚽</span><span class="ag-lbl">Liga — J24</span><span class="ag-wx">🌧</span></div>
+<div class="ag-r ag-eur"><span class="ag-date">23 Feb</span><span class="ag-ico">🇪🇺</span><span class="ag-lbl">Europa — Repesca Vuelta</span><span class="ag-wx">☀️</span></div>
+<div class="ag-r ag-liga"><span class="ag-date">26 Feb</span><span class="ag-ico">⚽</span><span class="ag-lbl">Liga — J25</span><span class="ag-wx">☀️</span></div>
+<div class="ag-r ag-copa"><span class="ag-date">02 Mar</span><span class="ag-ico">🏆</span><span class="ag-lbl">Copa del Rey — Cuartos Ida</span><span class="ag-wx">☀️</span></div>
+<div class="ag-r ag-liga"><span class="ag-date">05 Mar</span><span class="ag-ico">⚽</span><span class="ag-lbl">Liga — J26</span><span class="ag-wx">☀️</span></div>
+<div class="ag-r ag-copa"><span class="ag-date">09 Mar</span><span class="ag-ico">🏆</span><span class="ag-lbl">Copa del Rey — Cuartos Vuelta</span><span class="ag-wx">☀️</span></div>
+<div class="ag-r ag-sel"><span class="ag-date">12 Mar</span><span class="ag-ico">🌍</span><span class="ag-lbl">Selecciones — J7</span><span class="ag-wx">☀️</span></div>
+<div class="ag-r ag-sel"><span class="ag-date">16 Mar</span><span class="ag-ico">🌍</span><span class="ag-lbl">Selecciones — J8</span><span class="ag-wx">☀️</span></div>
+<div class="ag-r ag-liga"><span class="ag-date">20 Mar</span><span class="ag-ico">⚽</span><span class="ag-lbl">Liga — J27</span><span class="ag-wx">☀️</span></div>
+<div class="ag-r ag-eur"><span class="ag-date">23 Mar</span><span class="ag-ico">🇪🇺</span><span class="ag-lbl">Europa — Octavos Ida</span><span class="ag-wx">☀️</span></div>
+<div class="ag-r ag-liga ag-rain"><span class="ag-date">27 Mar</span><span class="ag-ico">⚽</span><span class="ag-lbl">Liga — J28</span><span class="ag-wx">🌧</span></div>
+<div class="ag-r ag-eur"><span class="ag-date">30 Mar</span><span class="ag-ico">🇪🇺</span><span class="ag-lbl">Europa — Octavos Vuelta</span><span class="ag-wx">☀️</span></div>
+<div class="ag-r ag-liga"><span class="ag-date">03 Abr</span><span class="ag-ico">⚽</span><span class="ag-lbl">Liga — J29</span><span class="ag-wx">☀️</span></div>
+<div class="ag-r ag-copa"><span class="ag-date">06 Abr</span><span class="ag-ico">🏆</span><span class="ag-lbl">Copa del Rey — Semis Ida</span><span class="ag-wx">☀️</span></div>
+<div class="ag-r ag-liga"><span class="ag-date">10 Abr</span><span class="ag-ico">⚽</span><span class="ag-lbl">Liga — J30</span><span class="ag-wx">☀️</span></div>
+<div class="ag-r ag-copa"><span class="ag-date">13 Abr</span><span class="ag-ico">🏆</span><span class="ag-lbl">Copa del Rey — Semis Vuelta</span><span class="ag-wx">☀️</span></div>
+<div class="ag-r ag-liga"><span class="ag-date">17 Abr</span><span class="ag-ico">⚽</span><span class="ag-lbl">Liga — J31</span><span class="ag-wx">☀️</span></div>
+<div class="ag-r ag-eur"><span class="ag-date">20 Abr</span><span class="ag-ico">🇪🇺</span><span class="ag-lbl">Europa — Cuartos Ida</span><span class="ag-wx">☀️</span></div>
+<div class="ag-r ag-liga ag-rain"><span class="ag-date">24 Abr</span><span class="ag-ico">⚽</span><span class="ag-lbl">Liga — J32</span><span class="ag-wx">🌧</span></div>
+<div class="ag-r ag-eur"><span class="ag-date">27 Abr</span><span class="ag-ico">🇪🇺</span><span class="ag-lbl">Europa — Cuartos Vuelta</span><span class="ag-wx">☀️</span></div>
+<div class="ag-r ag-liga"><span class="ag-date">01 May</span><span class="ag-ico">⚽</span><span class="ag-lbl">Liga — J33</span><span class="ag-wx">☀️</span></div>
+<div class="ag-r ag-sel"><span class="ag-date">04 May</span><span class="ag-ico">🌍</span><span class="ag-lbl">Selecciones — J9</span><span class="ag-wx">☀️</span></div>
+<div class="ag-r ag-sel"><span class="ag-date">07 May</span><span class="ag-ico">🌍</span><span class="ag-lbl">Selecciones — J10</span><span class="ag-wx">☀️</span></div>
+<div class="ag-r ag-liga"><span class="ag-date">11 May</span><span class="ag-ico">⚽</span><span class="ag-lbl">Liga — J34</span><span class="ag-wx">☀️</span></div>
+<div class="ag-r ag-eur"><span class="ag-date">14 May</span><span class="ag-ico">🇪🇺</span><span class="ag-lbl">Europa — Semis Ida</span><span class="ag-wx">☀️</span></div>
+<div class="ag-r ag-liga ag-rain"><span class="ag-date">18 May</span><span class="ag-ico">⚽</span><span class="ag-lbl">Liga — J35</span><span class="ag-wx">🌧</span></div>
+<div class="ag-r ag-eur"><span class="ag-date">21 May</span><span class="ag-ico">🇪🇺</span><span class="ag-lbl">Europa — Semis Vuelta</span><span class="ag-wx">☀️</span></div>
+<div class="ag-r ag-liga"><span class="ag-date">25 May</span><span class="ag-ico">⚽</span><span class="ag-lbl">Liga — J36</span><span class="ag-wx">☀️</span></div>
+<div class="ag-r ag-liga"><span class="ag-date">28 May</span><span class="ag-ico">⚽</span><span class="ag-lbl">Liga — J37</span><span class="ag-wx">☀️</span></div>
+<div class="ag-r ag-liga"><span class="ag-date">01 Jun</span><span class="ag-ico">⚽</span><span class="ag-lbl">Liga — J38</span><span class="ag-wx">☀️</span></div>
+<div class="ag-r ag-recopa"><span class="ag-date">04 Jun</span><span class="ag-ico">🟤</span><span class="ag-lbl">FINAL RECOPA</span><span class="ag-wx">☀️</span></div>
+<div class="ag-r ag-copa"><span class="ag-date">07 Jun</span><span class="ag-ico">🏆</span><span class="ag-lbl">FINAL COPA DEL REY</span><span class="ag-wx">☀️</span></div>
+<div class="ag-r ag-copa"><span class="ag-date">10 Jun</span><span class="ag-ico">🏆</span><span class="ag-lbl">Supercopa España — Semis</span><span class="ag-wx">☀️</span></div>
+<div class="ag-r ag-copa"><span class="ag-date">13 Jun</span><span class="ag-ico">🏆</span><span class="ag-lbl">SUPERCOPA ESPAÑA — FINAL</span><span class="ag-wx">☀️</span></div>
+<div class="ag-r ag-eur"><span class="ag-date">16 Jun</span><span class="ag-ico">🇪🇺</span><span class="ag-lbl">FINALES EUROPA 🏆</span><span class="ag-wx">☀️</span></div>
+<div class="ag-r ag-eur"><span class="ag-date">19 Jun</span><span class="ag-ico">🇪🇺</span><span class="ag-lbl">Supercopa Europa — Semis</span><span class="ag-wx">☀️</span></div>
+<div class="ag-r ag-eur"><span class="ag-date">22 Jun</span><span class="ag-ico">🇪🇺</span><span class="ag-lbl">SUPERCOPA EUROPA — FINAL</span><span class="ag-wx">☀️</span></div>
+
+<div class="ag-season verano" style="color:#80e8ff;background:rgba(0,30,60,.4);">🌍 FASE FINAL SELECCIONES <span class="ag-section-count">6 EVENTOS</span></div>
+<div class="ag-r ag-sel ag-rain"><span class="ag-date">26 Jun</span><span class="ag-ico">🌍</span><span class="ag-lbl">Grupo — J1</span><span class="ag-wx">🌧</span></div>
+<div class="ag-r ag-sel"><span class="ag-date">30 Jun</span><span class="ag-ico">🌍</span><span class="ag-lbl">Grupo — J2</span><span class="ag-wx">☀️</span></div>
+<div class="ag-r ag-sel"><span class="ag-date">04 Jul</span><span class="ag-ico">🌍</span><span class="ag-lbl">Grupo — J3</span><span class="ag-wx">☀️</span></div>
+<div class="ag-r ag-sel"><span class="ag-date">08 Jul</span><span class="ag-ico">🌍</span><span class="ag-lbl">Grupo — J4</span><span class="ag-wx">☀️</span></div>
+<div class="ag-r ag-sel"><span class="ag-date">12 Jul</span><span class="ag-ico">🌍</span><span class="ag-lbl">Repesca / Octavos / Semis</span><span class="ag-wx">☀️</span></div>
+<div class="ag-r ag-sel" style="border-bottom:none;"><span class="ag-date">20 Jul</span><span class="ag-ico">🌍</span><span class="ag-lbl" style="color:#f0c040;font-weight:700;">GRAN FINAL SELECCIONES 🏆</span><span class="ag-wx">☀️</span></div>
+
+</div>

@@ -1,0 +1,72 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liga Hypermotion · Estadísticas</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Oswald:wght@300;400;600;700&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root{--bg:#05070b;--gold:#f0c040;--green1:#082a14;--green2:#0f5a28;}
+        *{box-sizing:border-box} body{margin:0;background:radial-gradient(circle at top left,rgba(240,192,64,.08),transparent 30%),linear-gradient(90deg,#05070b 0%,#070b13 40%,#040914 100%);color:#fff;font-family:Rajdhani,sans-serif;min-height:100vh}
+        .page{max-width:1900px;margin:0 auto;padding:16px 12px 32px}
+        .back{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:12px;background:#101722;border:1px solid rgba(255,255,255,.08);color:#fff;text-decoration:none;font-family:Oswald,sans-serif;letter-spacing:1px;margin-bottom:10px}
+        .sec-hdr{display:flex;align-items:center;gap:12px;padding:0 6px 10px;border-bottom:1px solid rgba(240,192,64,.25);margin-bottom:12px}
+        .sec-hdr h2{margin:0;font-family:Oswald,sans-serif;letter-spacing:1.5px;color:var(--gold);font-size:18px}
+        .liga-stats-wrap{padding:0 4px 28px;display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:14px}
+        .liga-stat-card{background:linear-gradient(180deg,#101622 0%,#0b1018 100%);border:1px solid rgba(240,192,64,.18);border-radius:10px;overflow:hidden;box-shadow:0 4px 18px rgba(0,0,0,.35)}
+        .liga-stat-head{display:flex;align-items:center;gap:10px;padding:12px 14px;background:linear-gradient(90deg,var(--green1),var(--green2));border-bottom:1px solid rgba(240,192,64,.22)}
+        .liga-stat-ico{font-size:20px;line-height:1}.liga-stat-title{font-family:'Oswald',sans-serif;font-size:13px;letter-spacing:1.5px;color:#fff;text-transform:uppercase;font-weight:700}
+        .liga-stat-body{padding:8px 10px 10px;min-height:126px}
+        .liga-stat-row{display:grid;grid-template-columns:30px 1fr auto;gap:10px;align-items:center;padding:9px 6px;border-bottom:1px solid rgba(255,255,255,.05)}
+        .liga-stat-row:last-child{border-bottom:none}.liga-stat-rank{font-family:'Bebas Neue',sans-serif;font-size:20px;color:rgba(240,192,64,.9);text-align:center}
+        .liga-stat-player{min-width:0;display:flex;flex-direction:column;gap:2px}.liga-stat-name{font-family:'Rajdhani',sans-serif;font-size:15px;font-weight:700;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.liga-stat-team{font-family:'Oswald',sans-serif;font-size:10px;letter-spacing:1.4px;color:rgba(255,255,255,.45);text-transform:uppercase}
+        .liga-stat-value{font-family:'Bebas Neue',sans-serif;font-size:24px;color:#f0c040;min-width:34px;text-align:right;letter-spacing:1px}
+        .liga-stat-empty{display:flex;align-items:center;justify-content:center;height:100%;min-height:90px;text-align:center;font-family:'Oswald',sans-serif;font-size:11px;letter-spacing:2px;color:rgba(255,255,255,.28)}
+        .toplinks{display:flex;gap:10px;flex-wrap:wrap;padding:0 4px 12px}.mini-link{display:inline-flex;align-items:center;gap:6px;padding:8px 12px;border-radius:12px;background:#101722;border:1px solid rgba(255,255,255,.08);color:#dce7ff;text-decoration:none;font-family:Oswald,sans-serif;font-size:12px;letter-spacing:1px;text-transform:uppercase}
+    </style>
+</head>
+<body>
+    <a href="/" aria-label="Ir al inicio" style="position:fixed;top:10px;left:50%;transform:translateX(-50%);width:38px;height:38px;display:flex;align-items:center;justify-content:center;background:#111;border:1px solid #f0c040;border-radius:8px;color:#fff;text-decoration:none;z-index:5000;box-shadow:0 4px 12px rgba(0,0,0,.35);">🏠</a>
+
+<div class="page">
+    <a class="back" href="/segunda">◀ Volver</a>
+    <div class="sec-hdr"><span style="font-size:22px">📈</span><h2>Liga Hypermotion · Estadísticas</h2></div>
+    <div class="toplinks"><a class="mini-link" href="/segunda/clasificacion">📊 Clasificación</a></div>
+    <div class="liga-stats-wrap">
+        {% macro card(title, icon, items) -%}
+        <div class="liga-stat-card">
+            <div class="liga-stat-head"><span class="liga-stat-ico">{{ icon }}</span><div class="liga-stat-title">{{ title }}</div></div>
+            <div class="liga-stat-body">
+                {% if items %}
+                    {% for item in items %}
+                    <div class="liga-stat-row">
+                        <div class="liga-stat-rank">{{ loop.index }}</div>
+                        <div class="liga-stat-player">
+                            <div class="liga-stat-name">{{ item.jugador }}</div>
+                            <div class="liga-stat-team">{{ item.equipo if item.equipo else 'Liga Hypermotion' }}</div>
+                        </div>
+                        <div class="liga-stat-value">{{ item.total }}</div>
+                    </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="liga-stat-empty">Sin datos todavía</div>
+                {% endif %}
+            </div>
+        </div>
+        {%- endmacro %}
+
+        {{ card('Goleadores', '⚽', goles) }}
+        {{ card('Tarjetas amarillas', '🟨', amarillas) }}
+        {{ card('Tarjetas rojas', '🟥', rojas) }}
+        {{ card('Penaltis provocados', '🧍', penaltis_provocados) }}
+        {{ card('Goles de penalti', '🥅', goles_penalti) }}
+        {{ card('Penaltis fallados', '❌', penaltis_fallados) }}
+        {{ card('Penaltis parados', '🖐️', penaltis_parados) }}
+        {{ card('Goles de falta', '🎯', goles_falta) }}
+        {{ card('Autogoles', '🚫', autogoles) }}
+        {{ card('MVP', '⭐', mvp) }}
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,115 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liga Hypermotion · Clasificación</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Oswald:wght@300;400;600;700&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root{--bg:#05070b;--panel:#080a0f;--gold:#f0c040;--green1:#082a14;--green2:#0f5a28;}
+        *{box-sizing:border-box} body{margin:0;background:radial-gradient(circle at top left,rgba(240,192,64,.08),transparent 30%),linear-gradient(90deg,#05070b 0%,#070b13 40%,#040914 100%);color:#fff;font-family:Rajdhani,sans-serif;min-height:100vh}
+        .page{max-width:1600px;margin:0 auto;padding:16px 10px 32px}
+        .top{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:10px}
+        .back{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:12px;background:#101722;border:1px solid rgba(255,255,255,.08);color:#fff;text-decoration:none;font-family:Oswald,sans-serif;letter-spacing:1px}
+        .sec-hdr{display:flex;align-items:center;gap:12px;padding:0 6px 10px;border-bottom:1px solid rgba(240,192,64,.25);margin-bottom:8px}
+        .sec-emoji{font-size:22px}.sec-hdr h2{margin:0;font-family:Oswald,sans-serif;letter-spacing:1.5px;color:var(--gold);font-size:18px}
+        .toolbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:0 6px 10px}
+        .mini-link{display:inline-flex;align-items:center;gap:6px;padding:8px 12px;border-radius:12px;background:#101722;border:1px solid rgba(255,255,255,.08);color:#dce7ff;text-decoration:none;font-family:Oswald,sans-serif;font-size:12px;letter-spacing:1px;text-transform:uppercase}
+        .status{font-family:Oswald,sans-serif;font-size:12px;letter-spacing:1px;color:rgba(255,255,255,.58)}
+        .simulate-btn{border:none;border-radius:14px;padding:10px 16px;background:linear-gradient(180deg,#f0c040,#c18d12);color:#17140a;font-family:Oswald,sans-serif;font-size:13px;letter-spacing:1px;text-transform:uppercase;font-weight:700;cursor:pointer;box-shadow:0 8px 24px rgba(240,192,64,.18)}
+        .simulate-btn[disabled]{opacity:.5;cursor:default}
+        .clas-wrap{padding:0 0 32px}
+        .clas-scroll{overflow-x:auto;padding-top:6px}
+        .clas-table{width:100%;display:flex;flex-direction:column;gap:0;min-width:900px}
+        .clas-hdr,.clas-row{display:grid;grid-template-columns:minmax(180px,1.5fr) 44px 30px 26px 26px 26px 30px 30px 32px 26px 26px 34px 44px 86px;gap:2px;align-items:center}
+        .clas-hdr{padding:8px 6px 8px 0;background:linear-gradient(90deg,var(--green1),var(--green2));border-bottom:2px solid rgba(240,192,64,.4);font-family:Oswald,sans-serif;font-size:10px;letter-spacing:1px;color:rgba(255,255,255,.62);font-weight:700;text-align:center;position:sticky;top:0;z-index:10}
+        .clas-hdr-team{position:sticky;left:0;z-index:12;background:linear-gradient(90deg,var(--green1),var(--green2));padding:8px 8px;text-align:left;color:rgba(255,255,255,.9);font-family:Oswald,sans-serif;font-size:10px;letter-spacing:1px;font-weight:700}
+        .clas-row{padding:6px 6px 6px 0;border-bottom:1px solid rgba(255,255,255,.05);transition:background .12s;border-left:3px solid transparent;background:rgba(8,10,15,.95)}
+        .clas-row:hover{filter:brightness(1.12)}
+        .clas-row.zone-playoff{background:rgba(49,111,255,.13);border-left-color:#3160ff}
+        .clas-row.zone-promo{background:rgba(255,130,20,.13);border-left-color:#ff8214}
+        .clas-row.zone-desc{background:rgba(224,60,60,.13);border-left-color:#e03c3c}
+        .clas-team-cell{position:sticky;left:0;z-index:5;display:flex;align-items:center;gap:7px;padding:0 8px;background:#080a0f}
+        .clas-row.zone-playoff .clas-team-cell{background:#091224}.clas-row.zone-promo .clas-team-cell{background:#130d05}.clas-row.zone-desc .clas-team-cell{background:#130606}
+        .team-badge{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:12px;letter-spacing:1px;color:#fff;background:linear-gradient(180deg,#173357,#0d1a2e);border:1px solid rgba(255,255,255,.12);flex-shrink:0}
+        .clas-pos-n{font-family:'Bebas Neue',sans-serif;font-size:15px;color:rgba(255,255,255,.45);min-width:16px;text-align:center;flex-shrink:0}
+        .zone-playoff .clas-pos-n{color:#7fb2ff}.zone-promo .clas-pos-n{color:#ffb066}.zone-desc .clas-pos-n{color:#ff7070}
+        .clas-team-name{font-family:Rajdhani,sans-serif;font-size:13px;font-weight:700;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-decoration:none}
+        .clas-pct{font-family:'Bebas Neue',sans-serif;font-size:16px;color:#c0a0ff;text-align:center}
+        .clas-pts{font-family:'Bebas Neue',sans-serif;font-size:20px;color:var(--gold);text-align:center;font-weight:700}
+        .clas-pj,.clas-val,.clas-mvp{font-family:'Bebas Neue',sans-serif;font-size:16px;color:rgba(255,255,255,.78);text-align:center}
+        .clas-val.gf{color:#80d0ff}.clas-val.gc{color:#ff9090}.clas-val.dg.pos{color:#4fc86a}.clas-val.dg.neg{color:#ff7070}.clas-val.dg.zer{color:rgba(255,255,255,.45)}.clas-val.ta{color:#f0c040}.clas-val.tr{color:#e05050}
+        .clas-form{display:flex;align-items:center;gap:5px;justify-content:flex-start;min-height:18px;overflow:hidden}
+        .clas-dot{width:12px;height:12px;border-radius:50%;display:inline-block;box-shadow:0 0 0 1px rgba(255,255,255,.10) inset}
+        .clas-dot.win{background:#34c759}.clas-dot.draw{background:#8a8f98}.clas-dot.loss{background:#ff4d4f}.clas-dot.pending{background:rgba(255,255,255,.18)}
+        .clas-legend{display:flex;flex-wrap:wrap;gap:10px;align-items:center;padding:8px 10px 4px;font-family:Oswald,sans-serif;font-size:10px;letter-spacing:.5px;color:rgba(255,255,255,.65)}
+        .clas-legend-item{display:flex;align-items:center;gap:4px}
+        .clas-empty{padding:28px 0;text-align:center;font-family:Oswald,sans-serif;font-size:11px;letter-spacing:2px;color:rgba(255,255,255,.3)}
+    </style>
+</head>
+<body>
+    <a href="/" aria-label="Ir al inicio" style="position:fixed;top:10px;left:50%;transform:translateX(-50%);width:38px;height:38px;display:flex;align-items:center;justify-content:center;background:#111;border:1px solid #f0c040;border-radius:8px;color:#fff;text-decoration:none;z-index:5000;box-shadow:0 4px 12px rgba(0,0,0,.35);">🏠</a>
+
+<div class="page">
+    <div class="top">
+        <a class="back" href="/segunda">◀ Volver</a>
+    </div>
+    <div class="sec-hdr"><span class="sec-emoji">📊</span><h2>Liga Hypermotion · Clasificación</h2></div>
+    <div class="toolbar">
+        <a class="mini-link" href="/segunda/estadisticas">📈 Estadísticas</a>
+        <span class="status">Partidos jugados: {{ jugados }} / {{ total_partidos }}</span>
+        <form action="/segunda/simular" method="POST" style="margin:0 0 0 auto;">
+            <button class="simulate-btn" type="submit" {% if simulada %}disabled{% endif %}>⚽ Simular liga</button>
+        </form>
+    </div>
+    <div class="clas-wrap">
+        <div class="clas-scroll">
+            <div class="clas-table">
+                <div class="clas-hdr">
+                    <div class="clas-hdr-team">Equipo</div>
+                    <div>PTS</div><div>PJ</div><div>V</div><div>E</div><div>P</div><div>GF</div><div>GC</div><div>DG</div><div>TA</div><div>TR</div><div>MVP</div><div>%</div><div>Últ. 5</div>
+                </div>
+                {% for equipo in tabla %}
+                <div class="clas-row {% if loop.index <= 6 %}zone-playoff{% elif loop.index <= 8 %}zone-promo{% elif loop.index >= 19 %}zone-desc{% endif %}">
+                    <div class="clas-team-cell">
+                        <span class="clas-pos-n">{{ loop.index }}</span>
+                        <span class="team-badge">{{ equipo.nombre[:3]|upper }}</span>
+                        <a class="clas-team-name" href="/segunda/equipo/{{ equipo.nombre|urlencode }}">{{ equipo.nombre }}</a>
+                    </div>
+                    <div class="clas-pts">{{ equipo.pts }}</div>
+                    <div class="clas-pj">{{ equipo.pj }}</div>
+                    <div class="clas-val">{{ equipo.v }}</div>
+                    <div class="clas-val">{{ equipo.e }}</div>
+                    <div class="clas-val">{{ equipo.p }}</div>
+                    <div class="clas-val gf">{{ equipo.gf }}</div>
+                    <div class="clas-val gc">{{ equipo.gc }}</div>
+                    <div class="clas-val dg {% if equipo.dg > 0 %}pos{% elif equipo.dg < 0 %}neg{% else %}zer{% endif %}">{{ equipo.dg }}</div>
+                    <div class="clas-val ta">{{ equipo.ta }}</div>
+                    <div class="clas-val tr">{{ equipo.tr }}</div>
+                    <div class="clas-mvp">{{ equipo.mvp }}</div>
+                    <div class="clas-pct">{{ equipo.pct }}%</div>
+                    <div class="clas-form">
+                        {% if equipo.ult5 %}
+                            {% for r in equipo.ult5 %}
+                                <span class="clas-dot {% if r == 'W' %}win{% elif r == 'D' %}draw{% else %}loss{% endif %}"></span>
+                            {% endfor %}
+                        {% else %}
+                            <span class="clas-dot pending"></span>
+                        {% endif %}
+                    </div>
+                </div>
+                {% else %}
+                <div class="clas-empty">Sin equipos todavía</div>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="clas-legend">
+            <span class="clas-legend-item"><span class="clas-dot win"></span> Victoria</span>
+            <span class="clas-legend-item"><span class="clas-dot draw"></span> Empate</span>
+            <span class="clas-legend-item"><span class="clas-dot loss"></span> Derrota</span>
+        </div>
+    </div>
+</div>
+</body>
+</html>

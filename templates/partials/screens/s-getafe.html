@@ -1,0 +1,90 @@
+<div class="screen" id="s-getafe">
+<button class="back-btn" onclick="go('s-home')">◀ Volver</button>
+<div class="sec-hdr">
+<svg style="width:44px;height:44px;flex-shrink:0;" viewbox="0 0 100 120" xmlns="http://www.w3.org/2000/svg">
+<path d="M50 5 L90 15 L90 75 Q90 105 50 115 Q10 105 10 75 L10 15 Z" fill="#1a428a" stroke="#fff" stroke-width="3"></path>
+<text fill="white" font-family="Arial Black,sans-serif" font-size="10" font-weight="900" text-anchor="middle" x="50" y="68">GET</text>
+</svg>
+<div style="display:flex;flex-direction:column;gap:2px;">
+<div style="display:flex;align-items:center;gap:6px;">
+<span style="font-family:'Oswald',sans-serif;font-size:22px;font-weight:700;letter-spacing:2px;color:#4a7fd4;">Getafe CF</span>
+<span style="font-family:'Oswald',sans-serif;font-size:15px;font-weight:400;letter-spacing:1px;color:#4a7fd4;opacity:0.75;">· BORDALÁS</span>
+</div>
+<div style="display:flex;align-items:center;gap:5px;margin-top:1px;">
+<span style="font-size:13px;">🏟</span>
+<span style="font-family:'Rajdhani',sans-serif;font-size:12px;font-weight:600;letter-spacing:1.5px;color:#4a7fd4;opacity:0.6;">COLISEO DE LOS DEPORTES</span>
+</div>
+</div></div>
+<style>
+#s-getafe .plant-num{color:rgba(74,127,212,.75);}
+#s-getafe .plant-row:hover{background:rgba(26,66,138,.07);}
+#s-getafe .plant-pos-hdr{color:#4a7fd4;background:#00010a;letter-spacing:3px;}
+#s-getafe .plant-col-hdr{background:#00010a;}
+#s-getafe .pos-mini-hdr{background:#00010a;padding:5px 14px;gap:3px;}
+#s-getafe .pos-mini-hdr.por span:nth-child(3){color:#ffe040;}
+#s-getafe .pos-mini-hdr.por span:nth-child(4){color:#ff5555;}
+#s-getafe .pos-mini-hdr.por span:nth-child(5){color:#50e8ff;}
+#s-getafe .pos-mini-hdr.por span:nth-child(6){color:#ffe040;}
+#s-getafe .pos-mini-hdr.def span:nth-child(3),#s-getafe .pos-mini-hdr.med span:nth-child(3),#s-getafe .pos-mini-hdr.del span:nth-child(3){color:#6ee890;}
+#s-getafe .pos-mini-hdr.def span:nth-child(4),#s-getafe .pos-mini-hdr.med span:nth-child(4),#s-getafe .pos-mini-hdr.del span:nth-child(4){color:#ffe040;}
+#s-getafe .pos-mini-hdr.def span:nth-child(5),#s-getafe .pos-mini-hdr.med span:nth-child(5),#s-getafe .pos-mini-hdr.del span:nth-child(5){color:#ff5555;}
+#s-getafe .pos-mini-hdr.def span:nth-child(6),#s-getafe .pos-mini-hdr.med span:nth-child(6),#s-getafe .pos-mini-hdr.del span:nth-child(6){color:#b8ff60;}
+#s-getafe .pos-mini-hdr.def span:nth-child(7),#s-getafe .pos-mini-hdr.med span:nth-child(7),#s-getafe .pos-mini-hdr.del span:nth-child(7){color:#ffe040;}
+#s-getafe .plant-filter-btn{border-color:rgba(26,66,138,.2);background:rgba(26,66,138,.06);}
+#s-getafe .plant-filter-btn.active,#s-getafe .plant-filter-btn:hover{background:rgba(26,66,138,.25);border-color:rgba(74,127,212,.5);color:#fff;}
+#s-getafe .ent-section{border:1px solid rgba(74,127,212,.3);}
+#s-getafe .ent-header{background:linear-gradient(135deg,#00010a 0%,#060d1a 55%,#00010a 100%);}
+#s-getafe .ent-body{background:linear-gradient(180deg,#00010a 0%,#000005 100%);padding:0;}
+.get-badge-total{background:rgba(26,66,138,.2);border:1px solid rgba(74,127,212,.4);border-radius:10px;padding:1px 9px;margin-left:auto;margin-right:8px;font-family:'Bebas Neue',sans-serif;font-size:16px;color:#7aadff;font-style:normal;}
+</style>
+<div style="padding:10px 14px 90px;display:flex;flex-direction:column;gap:18px;">
+<div style="background:rgba(0,0,0,.4);border:1px solid #4a7fd433;border-radius:12px;padding:14px 18px;margin-bottom:4px;">
+<div style="display:flex;gap:0;">
+<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;">
+<span style="font-family:Oswald,sans-serif;font-size:9px;letter-spacing:2px;color:rgba(255,255,255,.4);">VALORACIÓN</span>
+<span style="font-family:'Bebas Neue',sans-serif;font-size:32px;line-height:1;color:#4a7fd4;">7.50</span>
+<span style="font-family:Oswald,sans-serif;font-size:9px;letter-spacing:1px;color:#4a7fd4;opacity:.7;">OBJETIVO: 7.50 pts</span>
+</div>
+<div style="width:1px;background:rgba(255,255,255,.1);margin:0 8px;"></div>
+<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;">
+<span style="font-family:Oswald,sans-serif;font-size:9px;letter-spacing:2px;color:rgba(255,255,255,.4);">PRESUPUESTO</span>
+<span style="font-family:'Bebas Neue',sans-serif;font-size:32px;line-height:1;color:#4a7fd4;">750</span>
+<span style="font-family:Oswald,sans-serif;font-size:9px;letter-spacing:1px;color:#4a7fd4;opacity:.7;">OBJETIVO: 750 M€</span>
+</div>
+</div>
+</div>
+<div class="ent-section">
+<button class="ent-header" onclick="entTog('get-plantilla')"><i class="ico">👕</i><span>Plantilla</span>
+<span class="get-badge-total">22</span>
+<span class="ent-arr open" id="get-plantilla-arr">▼</span>
+</button>
+<div class="ent-body open" id="get-plantilla" style="padding:0;">
+<div class="plant-pos-hdr"><i class="ico">🧤</i> PORTEROS</div><div class="pos-mini-hdr por"><span>#</span><span>Jugador</span><span>⚽</span><span>🟨</span><span>🟥</span><span>⭐</span><span>🛡</span></div>
+<div class="plant-row por"><span class="plant-num">1</span><span class="plant-name">J. Letáček</span><span class="plant-stat zero">0</span><span class="plant-stat zero">0</span><span class="plant-stat zero">0</span><span class="plant-stat zero">0</span><span class="plant-stat poder zero">—</span><span class="plant-stat zero" hidden="">0</span><span class="plant-stat zero" hidden="">0</span><span class="plant-stat zero" hidden="">0</span><span class="plant-stat zero" hidden="">0</span><span class="plant-stat zero" hidden="">0</span></div>
+<div class="plant-row por"><span class="plant-num">13</span><span class="plant-name">David Soria</span><span class="plant-stat zero">0</span><span class="plant-stat zero">0</span><span class="plant-stat zero">0</span><span class="plant-stat zero">0</span><span class="plant-stat poder zero">—</span><span class="plant-stat zero" hidden="">0</span><span class="plant-stat zero" hidden="">0</span><span class="plant-stat zero" hidden="">0</span><span class="plant-stat zero" hidden="">0</span><span class="plant-stat zero" hidden="">0</span></div>
+<div class="plant-pos-hdr"><i class="ico">🛡</i> DEFENSAS</div><div class="pos-mini-hdr def"><span>#</span><span>Jugador</span><span>⚽</span><span>🟨</span><span>🟥</span><span>⭐</span><span>🛡</span></div>
+<div class="plant-row def"><span class="plant-num">2</span><span class="plant-name">Djené</span><span class="plant-stat zero">0</span><span class="plant-stat zero">0</span><span class="plant-stat zero">0</span><span class="plant-stat zero">0</span><span class="plant-stat poder zero">—</span><span class="plant-stat zero" hidden="">0</span><span class="plant-stat zero" hidden="">0</span><span class="plant-stat zero" hidden="">0</span><span class="plant-stat zero" hidden="">0</span></div>
+<div class="plant-row def"><span class="plant-num">3</span><span class="plant-name">A. Abqar</span><span class="plant-stat zero">0</span><span class="plant-stat zero">0</span><span class="plant-stat zero">0</span><span class="plant-stat zero">0</span><span class="plant-stat poder zero">—</span><span class="plant-stat zero" hidden="">0</span><span class="plant-stat zero" hidden="">0</span><span class="plant-stat zero" hidden="">0</span><span class="plant-stat zero" hidden="">0</span></div>
+<div class="plant-row def"><span class="plant-num">12</span><span class="plant-name">A. Nyom</span><span class="plant-stat zero">0</span><span class="plant-stat zero">0</span><span class="plant-stat zero">0</span><span class="plant-stat zero">0</span><span class="plant-stat poder zero">—</span><span class="plant-stat zero" hidden="">0</span><span class="plant-stat zero" hidden="">0</span><span class="plant-stat zero" hidden="">0</span><span class="plant-stat zero" hidden="">0</span></div>
+<div class="plant-row def"><span class="plant-num">16</span><span class="plant-name">Diego Rico</span><span class="plant-stat zero">0</span><span class="plant-stat zero">0</span><span class="plant-stat zero">0</span><span class="plant-stat zero">0</span><span class="plant-stat poder zero">—</span><span class="plant-stat zero" hidden="">0</span><span class="plant-stat zero" hidden="">0</span><span class="plant-stat zero" hidden="">0</span><span class="plant-stat zero" hidden="">0</span></div>
+<div class="plant-row def"><span class="plant-num">17</span><span class="plant-name">Kiko Femenía</span><span class="plant-stat zero">0</span><span class="plant-stat zero">0</span><span class="plant-stat zero">0</span><span class="plant-stat zero">0</span><span class="plant-stat poder zero">—</span><span class="plant-stat zero" hidden="">0</span><span class="plant-stat zero" hidden="">0</span><span class="plant-stat zero" hidden="">0</span><span class="plant-stat zero" hidden="">0</span></div>
+<div class="plant-row def"><span class="plant-num">21</span><span class="plant-name">Juan Iglesias</span><span class="plant-stat zero">0</span><span class="plant-stat zero">0</span><span class="plant-stat zero">0</span><span class="plant-stat zero">0</span><span class="plant-stat poder zero">—</span><span class="plant-stat zero" hidden="">0</span><span class="plant-stat zero" hidden="">0</span><span class="plant-stat zero" hidden="">0</span><span class="plant-stat zero" hidden="">0</span></div>
+<div class="plant-row def"><span class="plant-num">22</span><span class="plant-name">D. Duarte</span><span class="plant-stat zero">0</span><span class="plant-stat zero">0</span><span class="plant-stat zero">0</span><span class="plant-stat zero">0</span><span class="plant-stat poder zero">—</span><span class="plant-stat zero" hidden="">0</span><span class="plant-stat zero" hidden="">0</span><span class="plant-stat zero" hidden="">0</span><span class="plant-stat zero" hidden="">0</span></div>
+<div class="plant-row def"><span class="plant-num">26</span><span class="plant-name">Davinchi</span><span class="plant-stat zero">0</span><span class="plant-stat zero">0</span><span class="plant-stat zero">0</span><span class="plant-stat zero">0</span><span class="plant-stat poder zero">—</span><span class="plant-stat zero" hidden="">0</span><span class="plant-stat zero" hidden="">0</span><span class="plant-stat zero" hidden="">0</span><span class="plant-stat zero" hidden="">0</span></div>
+<div class="plant-pos-hdr"><i class="ico">⚙️</i> CENTROCAMPISTAS</div><div class="pos-mini-hdr med"><span>#</span><span>Jugador</span><span>⚽</span><span>🟨</span><span>🟥</span><span>⭐</span><span>🛡</span></div>
+<div class="plant-row med"><span class="plant-num">4</span><span class="plant-name">Y. Neyou</span><span class="plant-stat zero">0</span><span class="plant-stat zero">0</span><span class="plant-stat zero">0</span><span class="plant-stat zero">0</span><span class="plant-stat poder zero">—</span><span class="plant-stat zero" hidden="">0</span><span class="plant-stat zero" hidden="">0</span><span class="plant-stat zero" hidden="">0</span><span class="plant-stat zero" hidden="">0</span></div>
+<div class="plant-row med"><span class="plant-num">5</span><span class="plant-name">Luis Milla</span><span class="plant-stat zero">0</span><span class="plant-stat zero">0</span><span class="plant-stat zero">0</span><span class="plant-stat zero">0</span><span class="plant-stat poder zero">—</span><span class="plant-stat zero" hidden="">0</span><span class="plant-stat zero" hidden="">0</span><span class="plant-stat zero" hidden="">0</span><span class="plant-stat zero" hidden="">0</span></div>
+<div class="plant-row med"><span class="plant-num">6</span><span class="plant-name">Mario Martín</span><span class="plant-stat zero">0</span><span class="plant-stat zero">0</span><span class="plant-stat zero">0</span><span class="plant-stat zero">0</span><span class="plant-stat poder zero">—</span><span class="plant-stat zero" hidden="">0</span><span class="plant-stat zero" hidden="">0</span><span class="plant-stat zero" hidden="">0</span><span class="plant-stat zero" hidden="">0</span></div>
+<div class="plant-row med"><span class="plant-num">8</span><span class="plant-name">M. Arambarri</span><span class="plant-stat zero">0</span><span class="plant-stat zero">0</span><span class="plant-stat zero">0</span><span class="plant-stat zero">0</span><span class="plant-stat poder zero">—</span><span class="plant-stat zero" hidden="">0</span><span class="plant-stat zero" hidden="">0</span><span class="plant-stat zero" hidden="">0</span><span class="plant-stat zero" hidden="">0</span></div>
+<div class="plant-row med"><span class="plant-num">14</span><span class="plant-name">Javi Muñoz</span><span class="plant-stat zero">0</span><span class="plant-stat zero">0</span><span class="plant-stat zero">0</span><span class="plant-stat zero">0</span><span class="plant-stat poder zero">—</span><span class="plant-stat zero" hidden="">0</span><span class="plant-stat zero" hidden="">0</span><span class="plant-stat zero" hidden="">0</span><span class="plant-stat zero" hidden="">0</span></div>
+<div class="plant-row med"><span class="plant-num">18</span><span class="plant-name">Á. Sancris</span><span class="plant-stat zero">0</span><span class="plant-stat zero">0</span><span class="plant-stat zero">0</span><span class="plant-stat zero">0</span><span class="plant-stat poder zero">—</span><span class="plant-stat zero" hidden="">0</span><span class="plant-stat zero" hidden="">0</span><span class="plant-stat zero" hidden="">0</span><span class="plant-stat zero" hidden="">0</span></div>
+<div class="plant-row med"><span class="plant-num">20</span><span class="plant-name">Coba da Costa</span><span class="plant-stat zero">0</span><span class="plant-stat zero">0</span><span class="plant-stat zero">0</span><span class="plant-stat zero">0</span><span class="plant-stat poder zero">—</span><span class="plant-stat zero" hidden="">0</span><span class="plant-stat zero" hidden="">0</span><span class="plant-stat zero" hidden="">0</span><span class="plant-stat zero" hidden="">0</span></div>
+<div class="plant-pos-hdr"><i class="ico">⚡</i> DELANTEROS</div><div class="pos-mini-hdr del"><span>#</span><span>Jugador</span><span>⚽</span><span>🟨</span><span>🟥</span><span>⭐</span><span>🛡</span></div>
+<div class="plant-row del"><span class="plant-num">7</span><span class="plant-name">Juanmi</span><span class="plant-stat zero">0</span><span class="plant-stat zero">0</span><span class="plant-stat zero">0</span><span class="plant-stat zero">0</span><span class="plant-stat poder zero">—</span><span class="plant-stat zero" hidden="">0</span><span class="plant-stat zero" hidden="">0</span><span class="plant-stat zero" hidden="">0</span><span class="plant-stat zero" hidden="">0</span></div>
+<div class="plant-row del"><span class="plant-num">9</span><span class="plant-name">B. Mayoral</span><span class="plant-stat zero">0</span><span class="plant-stat zero">0</span><span class="plant-stat zero">0</span><span class="plant-stat zero">0</span><span class="plant-stat poder zero">—</span><span class="plant-stat zero" hidden="">0</span><span class="plant-stat zero" hidden="">0</span><span class="plant-stat zero" hidden="">0</span><span class="plant-stat zero" hidden="">0</span></div>
+<div class="plant-row del"><span class="plant-num">10</span><span class="plant-name">M. Satriano</span><span class="plant-stat zero">0</span><span class="plant-stat zero">0</span><span class="plant-stat zero">0</span><span class="plant-stat zero">0</span><span class="plant-stat poder zero">—</span><span class="plant-stat zero" hidden="">0</span><span class="plant-stat zero" hidden="">0</span><span class="plant-stat zero" hidden="">0</span><span class="plant-stat zero" hidden="">0</span></div>
+<div class="plant-row del"><span class="plant-num">23</span><span class="plant-name">Adrián Liso</span><span class="plant-stat zero">0</span><span class="plant-stat zero">0</span><span class="plant-stat zero">0</span><span class="plant-stat zero">0</span><span class="plant-stat poder zero">—</span><span class="plant-stat zero" hidden="">0</span><span class="plant-stat zero" hidden="">0</span><span class="plant-stat zero" hidden="">0</span><span class="plant-stat zero" hidden="">0</span></div>
+</div>
+</div>
+</div>
+</div>

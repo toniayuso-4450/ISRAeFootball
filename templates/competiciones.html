@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>eFootball - Competiciones</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Oswald:wght@400;700&family=Rajdhani:wght@600;700&display=swap" rel="stylesheet">
+    <style>
+        :root { --gold: #f0c040; --dark: #05070a; }
+        body {
+            background: radial-gradient(circle at top, #1a1f2c 0%, var(--dark) 100%);
+            color: white; font-family: 'Rajdhani', sans-serif; margin: 0; padding: 40px; text-align: center;
+        }
+        h1 { font-family: 'Bebas Neue'; font-size: 55px; color: var(--gold); letter-spacing: 4px; }
+        .grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px; max-width: 1200px; margin: 40px auto;
+        }
+        .card {
+            background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 15px; padding: 30px; text-decoration: none; color: white; transition: 0.4s;
+        }
+        .card:hover { transform: translateY(-10px); border-color: var(--gold); box-shadow: 0 10px 30px rgba(240, 192, 64, 0.2); }
+        .card img { width: 120px; height: 120px; object-fit: contain; margin-bottom: 20px; }
+        .card h2 { font-family: 'Oswald'; font-size: 20px; margin: 10px 0; }
+        .btn-back {
+            display: inline-block; margin-top: 40px; color: var(--gold); text-decoration: none;
+            border: 1px solid var(--gold); padding: 10px 30px; font-family: 'Oswald';
+        }
+    </style>
+</head>
+<body>
+    <a href="/" aria-label="Ir al inicio" style="position:fixed;top:10px;left:50%;transform:translateX(-50%);width:38px;height:38px;display:flex;align-items:center;justify-content:center;background:#111;border:1px solid #f0c040;border-radius:8px;color:#fff;text-decoration:none;z-index:5000;box-shadow:0 4px 12px rgba(0,0,0,.35);">🏠</a>
+
+
+    <h1>COMPETICIONES</h1>
+
+    <div class="grid">
+        <a href="#" class="card">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/Logo_UEFA_Champions_League.svg/1200px-Logo_UEFA_Champions_League.svg.png">
+            <h2>CHAMPIONS LEAGUE</h2>
+        </a>
+        <a href="#" class="card">
+            <img src="https://upload.wikimedia.org/wikipedia/en/thumb/0/03/UEFA_Europa_League_logo_%282021%29.svg/1200px-UEFA_Europa_League_logo_%282021%29.svg.png">
+            <h2>EUROPA LEAGUE</h2>
+        </a>
+        <a href="#" class="card">
+            <img src="https://upload.wikimedia.org/wikipedia/en/thumb/0/03/UEFA_Europa_Conference_League_logo.svg/1200px-UEFA_Europa_Conference_League_logo.svg.png">
+            <h2>CONFERENCE LEAGUE</h2>
+        </a>
+        <a href="#" class="card">
+            <img src="https://upload.wikimedia.org/wikipedia/en/thumb/e/e0/UEFA_Super_Cup_logo.svg/1200px-UEFA_Super_Cup_logo.svg.png">
+            <h2>UEFA SUPER CUP</h2>
+        </a>
+        <a href="#" class="card">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/FIFA_Intercontinental_Cup_logo.svg/800px-FIFA_Intercontinental_Cup_logo.svg.png">
+            <h2>INTERCONTINENTAL</h2>
+        </a>
+    </div>
+
+    <a href="/" class="btn-back">VOLVER AL INICIO</a>
+
+</body>
+</html>

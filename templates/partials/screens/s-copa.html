@@ -1,0 +1,72 @@
+<div class="screen" id="s-copa">
+<button class="back-btn" onclick="go('s-espana')">◀ Volver</button>
+<div class="sec-hdr"><img class="sec-ico comp-logo" src="/static/img/comp/copa-rey.png" alt="Copa del Rey"/><h2>Copa del Rey</h2></div>
+
+<!-- Rounds rendered dynamically by copa-engine.js -->
+<div class="jlist" id="copa-jlist">
+  <div class="copa-start-wrap">
+    <p class="copa-info">🏆 Cargando Copa del Rey…</p>
+  </div>
+</div>
+
+<!-- Cuadro de eliminatorias link -->
+<div class="submenu-list" style="padding-top:4px;padding-bottom:12px;">
+  <div class="submenu-card" onclick="go('s-copa-cuadro')" style="margin-top:6px;">
+    <span class="sc-emoji">🗂️</span><span class="sc-label">Cuadro de Eliminatorias</span><span class="sc-arr">▶</span>
+  </div>
+</div>
+
+<!-- ══ PANEL PARTIDO HUMANO ══════════════════════════════ -->
+<div id="copa-human-panel" class="copa-panel-overlay">
+  <div class="copa-panel-box">
+    <button class="copa-panel-close" onclick="chpCerrar()">✕</button>
+    <div class="copa-panel-title">🏆 Copa del Rey</div>
+
+    <!-- Aggregate info (vuelta only) -->
+    <div id="chp-agg-info" class="chp-agg-info" style="display:none"></div>
+
+    <!-- Teams -->
+    <div class="chp-teams-row">
+      <div class="chp-team-name" id="chp-local"></div>
+      <div class="chp-vs">VS</div>
+      <div class="chp-team-name" id="chp-visit"></div>
+    </div>
+
+    <!-- Full-time score -->
+    <div class="chp-section-label">Resultado (90')</div>
+    <div class="chp-score-row">
+      <input id="chp-gl" type="number" min="0" max="20" value="0"
+             class="chp-score-input" onchange="chpCheckEmpate()" oninput="chpCheckEmpate()"/>
+      <span class="chp-score-dash">–</span>
+      <input id="chp-gv" type="number" min="0" max="20" value="0"
+             class="chp-score-input" onchange="chpCheckEmpate()" oninput="chpCheckEmpate()"/>
+    </div>
+
+    <!-- Extra time (single-leg only, shown when FT is draw) -->
+    <div id="chp-et-section" style="display:none">
+      <div class="chp-section-label">Prórroga</div>
+      <div class="chp-score-row">
+        <input id="chp-et-gl" type="number" min="0" max="10" value="0"
+               class="chp-score-input" onchange="chpCheckET()" oninput="chpCheckET()"/>
+        <span class="chp-score-dash">–</span>
+        <input id="chp-et-gv" type="number" min="0" max="10" value="0"
+               class="chp-score-input" onchange="chpCheckET()" oninput="chpCheckET()"/>
+      </div>
+    </div>
+
+    <!-- Penalties (shown when needed) -->
+    <div id="chp-pen-section" style="display:none">
+      <div class="chp-section-label">🥅 Ganador en Penaltis</div>
+      <select id="chp-pen-winner" class="chp-pen-select"></select>
+    </div>
+
+    <!-- MVP -->
+    <div class="chp-section-label">⭐ MVP (opcional)</div>
+    <input id="chp-mvp" type="text" class="chp-mvp-input" placeholder="Nombre del jugador"/>
+
+    <!-- Save button -->
+    <button class="chp-btn-guardar" onclick="chpGuardar()">✅ Guardar Resultado</button>
+  </div>
+</div>
+
+</div>
