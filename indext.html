@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>eFootball ✓</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Oswald:wght@300;400;600;700&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/index.bundle.css') }}?v=5.5">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/goal-notification-improved.css') }}?v=2.1">
+  <style>
+    /* ── HOME: todas las cards exactamente 80px, gap 15px ── */
+    #s-home .menu-grid{gap:15px!important;}
+    #s-home .menu-card,
+    #s-home .menu-card.full,
+    #s-home #home-live-card,
+    #s-home .mc-derbys,
+    #s-home .mc-espana,
+    #s-home .mc-comp,
+    #s-home .mc-ligas,
+    #s-home .mc-sel,
+    #s-home .equipo-card,
+    #s-home .mc-athletic,
+    #s-home .mc-betis,
+    #s-home .mc-sociedad,
+    #s-home .mc-madrid,
+    #s-home .mc-barca{
+      height:80px!important;
+      min-height:80px!important;
+      max-height:80px!important;
+      overflow:hidden!important;
+      position:relative!important;
+      box-sizing:border-box!important;
+    }
+    /* ── ESCUDOS JORNADA: fuerza tamaño 28px ── */
+    img.escudo-jornada{width:28px!important;height:28px!important;max-width:28px!important;max-height:28px!important;object-fit:contain!important;flex-shrink:0!important;}
+    /* ── SHIELDS MATCH SIMULATOR: max tamaño ── */
+    .ml-shield-wrap img{max-width:44px!important;max-height:44px!important;}
+    /* ── NAV ROW: Volver + Home agrupados ── */
+    .nav-row{display:flex;align-items:center;gap:6px;margin:14px 18px 0;position:sticky;top:0;z-index:150;width:fit-content;}
+    .nav-row .back-btn{margin:0!important;position:static!important;top:auto!important;z-index:auto!important;}
+    .home-icon-btn{display:flex!important;align-items:center!important;justify-content:center!important;padding:7px 10px;text-decoration:none;font-size:15px;background:transparent;border:1px solid rgba(240,192,64,.22);border-radius:4px;color:rgba(255,255,255,.45);cursor:pointer;transition:all .16s;line-height:1;}
+    .home-icon-btn:hover{color:var(--gold,#f0c040);border-color:var(--gold,#f0c040);}
+    /* ── Evitar auto-scroll del navegador durante simulaciones ── */
+    * { overflow-anchor: none !important; }
+    /* ── BLOQUEO ABSOLUTO overlay central de gol ── */
+    #mm-event-flash,#mm-event-flash.show,#mm-event-flash.mm-flash-gol,
+    #mm-event-flash.mm-flash-roja,#mm-event-flash.mm-flash-gol.show,
+    #mm-event-flash.mm-flash-roja.show{
+      display:none!important;visibility:hidden!important;
+      opacity:0!important;pointer-events:none!important;
+    }
+    /* ── BLOQUEO sistema ml-goal-flash (texto GOOOOL central) ── */
+    .ml-goal-flash-inner,
+    .ml-goal-flash.show .ml-goal-flash-inner{
+      display:none!important;
+      visibility:hidden!important;
+      opacity:0!important;
+    }
+    /* ── ALTURA DE VIEWPORT MÓVIL + SAFE-AREA (2026-06-05) ──────────
+       Bug usuario (foto 1): "la parte de abajo de la pantalla no se ve,
+       te corta 1/4 de la visual en cualquier pantalla".
+
+       En móviles `100vh` mide el viewport GRANDE (incluye la zona que
+       tapan la barra de direcciones / la barra de gestos del sistema),
+       así que el último tramo del contenido quedaba debajo de la UI del
+       navegador o sin pintar (negro). `100dvh` (dynamic viewport
+       height) mide SOLO lo realmente visible, y la safe-area añade
+       margen extra para la barra inferior del sistema. */
+    @supports (height: 100dvh) {
+      html, body { min-height: 100dvh; }
+      .screen { min-height: 100dvh; }
+    }
+    body {
+      /* +safe-area para que el último contenido no quede bajo la barra
+         inferior del sistema/navegador. */
+      padding-bottom: calc(16px + env(safe-area-inset-bottom, 0px)) !important;
+    }
+  </style>
+  <script>
+    window.BACKEND_ESCUDOS = {{ escudos_resueltos | tojson }};
+    window.BACKEND_ESCUDOS_ALIASES = {{ escudos_aliases | tojson }};
+    window.BACKEND_ESCUDO_DEFAULT = {{ escudo_default | tojson }};
+  </script>
+</head>
+<body>
+
+  <!-- ═══ BOOT SPLASH ════════════════════════════════════════════════
+       Petición usuario 2026-05-19: "al cargar la web emerge la pantalla
+       antigua y tarda unos segundos en mostrar la actual". Causa: la
+       app renderiza primero con datos de localStorage (que pueden ser
+       viejos de la sesión anterior) y luego un fetch a /api/liga-ext/*
+       / /api/kv/* actualiza el contenido → flash de DATOS viejos →
+       nuevos. Este splash CUBRE el contenido durante la ventana de
+       hidratación inicial (~1.8 s) y se desvanece. Tap para cerrar
+       antes (no atasca si el server tarda). Solo en la PRIMERA carga
+       del documento — las navegaciones internas (go()) no lo
+       muestran. ════════════════════════════════════════════════════ -->
+  <div id="boot-splash" aria-hidden="true">
+    <div class="boot-splash-logo">
+      <span class="boot-splash-11">ISRA -</span>
+      <span class="boot-splash-title">Efootball</span>
+    </div>
+    <div class="boot-splash-spinner"></div>
+    <div class="boot-splash-hint">Cargando…</div>
+  </div>
+  <style>
+    #boot-splash{
+      position:fixed;inset:0;z-index:2147483646;
+      display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;
+      background:radial-gradient(ellipse at center,#0a0f1c 0%,#04060e 70%,#000 100%);
+      transition:opacity .35s ease;
+      cursor:pointer;
+      -webkit-tap-highlight-color:transparent;
+    }
+    #boot-splash.hide{opacity:0;pointer-events:none;}
+    .boot-splash-logo{display:flex;align-items:baseline;gap:10px;}
+    .boot-splash-11{
+      font-family:'Bebas Neue',Oswald,sans-serif;font-size:48px;font-weight:900;
+      color:#ff4444;text-shadow:0 0 16px rgba(255,60,60,.6),0 0 32px rgba(255,60,60,.35);
+      letter-spacing:1px;
+    }
+    .boot-splash-title{
+      font-family:'Bebas Neue',Oswald,sans-serif;font-size:36px;font-weight:700;
+      color:#f0c040;letter-spacing:6px;text-shadow:0 0 18px rgba(240,192,64,.55);
+    }
+    .boot-splash-spinner{
+      width:38px;height:38px;border-radius:50%;
+      border:3px solid rgba(240,192,64,.18);
+      border-top-color:#f0c040;
+      animation:bootSplashSpin .9s linear infinite;
+    }
+    @keyframes bootSplashSpin{to{transform:rotate(360deg);}}
+    .boot-splash-hint{
+      font-family:Oswald,sans-serif;font-size:11px;letter-spacing:3px;
+      color:rgba(255,255,255,.45);text-transform:uppercase;
+    }
+  </style>
+  <script>
+    /* Splash auto-hide RÁPIDO atado a DOMContentLoaded (NO a
+       window.load). 2026-05-21 — el usuario reportó que la web
+       tardaba 45+ s en abrir (antes <5 s).
+
+       Causa: el commit 1dd5623 ató el splash a `window.load`, que
+       NO dispara hasta que el navegador descarga TODOS los assets
+       (cientos de escudos PNG/SVG). En móvil eso son 45+ s — la
+       "barra azul" del browser no se completa hasta entonces.
+
+       window.load ≠ "app hidratada". La app está USABLE en
+       DOMContentLoaded: el HTML está parseado y el bundle
+       (index.bundle.js, script bloqueante) ya ha ejecutado, así que
+       el render inicial + el arranque de los fetches de hidratación
+       (/api/liga-ext/*, /api/kv/*) ya ocurrieron. Los escudos
+       siguen bajando en segundo plano SIN bloquear nada.
+
+       Flujo:
+       - hide() se programa en DOMContentLoaded + GRACE_MS. El grace
+         da un margen a que los fetches de hidratación más rápidos
+         (cache-hit / server caliente) re-rendericen antes de quitar
+         la cortina.
+       - Caps: MIN 1200 ms (no flashear ultra rápido) y MAX 8000 ms
+         (backstop si el bundle tarda mucho en parsear — nunca dejar
+         al usuario clavado).
+       - Tap/click cierra antes. */
+    (function(){
+      var MIN_MS   = (typeof window._BOOT_SPLASH_MIN_MS   === 'number') ? window._BOOT_SPLASH_MIN_MS   : 1200;
+      var GRACE_MS = (typeof window._BOOT_SPLASH_GRACE_MS === 'number') ? window._BOOT_SPLASH_GRACE_MS :  700;
+      var MAX_MS   = (typeof window._BOOT_SPLASH_MAX_MS   === 'number') ? window._BOOT_SPLASH_MAX_MS   : 8000;
+      var el = document.getElementById('boot-splash');
+      if (!el) return;
+      var hidden = false;
+      var startedAt = Date.now();
+      function hide(){
+        if (hidden) return;
+        var elapsed = Date.now() - startedAt;
+        if (elapsed < MIN_MS) { setTimeout(hide, MIN_MS - elapsed); return; }
+        hidden = true;
+        el.classList.add('hide');
+        setTimeout(function(){ if (el && el.parentNode) el.parentNode.removeChild(el); }, 380);
+      }
+      /* Tap-to-close (no atascar al usuario si la red va muy lenta). */
+      el.addEventListener('click', hide, { once:true });
+      el.addEventListener('touchend', hide, { once:true });
+
+      /* Trigger principal: DOMContentLoaded + GRACE_MS (app usable,
+         el bundle ya ejecutó). NO window.load — eso espera a TODOS
+         los escudos y dispara los 45 s. */
+      function _scheduleAfterReady(){ setTimeout(hide, GRACE_MS); }
+      if (document.readyState === 'interactive' || document.readyState === 'complete') {
+        _scheduleAfterReady();
+      } else {
+        document.addEventListener('DOMContentLoaded', _scheduleAfterReady, { once:true });
+      }
+      /* Backstop absoluto. */
+      setTimeout(hide, MAX_MS);
+      /* Hook por si un flujo crítico (ej. partido live restaurándose
+         del wprev_state_v1) quiere ocultarlo antes via _bootSplashHide(). */
+      window._bootSplashHide = hide;
+    })();
+  </script>
+
+  {% include 'partials/misc_body_1.html' %}
+  {% include 'partials/part2/misc_body_2.html' %}
+  <script src="{{ url_for('static', filename='js/goal-notification-improved.js') }}?v=2.0"></script>
+  <script src="{{ url_for('static', filename='js/var-system.js') }}?v=1.0"></script>
+  <script src="{{ url_for('static', filename='js/index.bundle.js') }}?v=9.9"></script>
+  <script>
+  /* ── PARCHE INLINE: bloquea el overlay central de gol ──────────────────
+     Corre inmediatamente después del bundle, sin depender de archivos
+     externos cacheados. Es la última línea de defensa. */
+  (function(){
+    /* 1. Ocultar el elemento si ya existe */
+    function hideOverlay(){
+      var el=document.getElementById('mm-event-flash');
+      if(!el)return;
+      el.style.setProperty('display','none','important');
+      el.style.setProperty('visibility','hidden','important');
+      el.style.setProperty('opacity','0','important');
+      el.classList.remove('show','mm-flash-gol','mm-flash-roja');
+    }
+
+    /* 2. Parchear window.mmShowFlash para goles */
+    var _origFlash = window.mmShowFlash;
+    window.mmShowFlash = function(type, teamName, playerName){
+      if(type === 'gol'){
+        /* Delegar al sistema mejorado si está disponible */
+        if(window.goalNotificationImproved){
+          /* Buscar el partido por nombre de equipo */
+          var matches=document.querySelectorAll('[id^="mlw-"]');
+          var matchId=null, team='a';
+          for(var i=0;i<matches.length;i++){
+            var names=matches[i].querySelectorAll('.ml-team-name');
+            for(var j=0;j<names.length;j++){
+              if(names[j].textContent.includes(teamName)){
+                matchId=matches[i].id.replace('mlw-','');
+                team=(j===1)?'b':'a';
+                break;
+              }
+            }
+            if(matchId)break;
+          }
+          if(matchId) window.goalNotificationImproved.show(matchId,team,playerName||'');
+        }
+        hideOverlay();
+        return; /* NUNCA mostrar el overlay central */
+      }
+      /* Para otros tipos (roja) usar el comportamiento original */
+      if(_origFlash) _origFlash(type,teamName,playerName);
+    };
+
+    /* 3. MutationObserver sobre el elemento para bloquear cualquier
+          intento de mostrar el overlay (incluso si viene de código privado) */
+    function watchOverlay(){
+      var el=document.getElementById('mm-event-flash');
+      if(!el||el._blocked)return;
+      el._blocked=true;
+      hideOverlay();
+      new MutationObserver(function(){hideOverlay();})
+        .observe(el,{attributes:true,attributeFilter:['class','style']});
+    }
+    /* Observar body para cuando el elemento se cree dinámicamente */
+    new MutationObserver(function(ms){
+      ms.forEach(function(m){
+        m.addedNodes.forEach(function(n){
+          if(n.id==='mm-event-flash'){hideOverlay();watchOverlay();}
+        });
+      });
+      watchOverlay();
+    }).observe(document.body,{childList:true});
+
+    watchOverlay();
+    setInterval(hideOverlay,150);
+  })();
+  </script>
+  <script>
+  /* ── NUCLEAR: elimina físicamente cualquier .ml-goal-flash-inner del DOM ── */
+  (function(){
+    function purgeGooool(){
+      document.querySelectorAll('.ml-goal-flash-inner').forEach(function(el){el.remove();});
+    }
+    purgeGooool();
+    new MutationObserver(purgeGooool).observe(document.body,{childList:true,subtree:true});
+  })();
+  </script>
+  <script src="{{ url_for('static', filename='js/goal-notification-patch.js') }}?v=2.1"></script>
+  <script src="{{ url_for('static', filename='js/copa-engine.js') }}?v=1.2"></script>
+  <script src="{{ url_for('static', filename='js/primera-rfef-data.js') }}?v=1.1"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function(){
+      /* Agrupa cada back-btn con el icono de inicio */
+      document.querySelectorAll('.back-btn').forEach(function(btn){
+        if(btn.closest('.nav-row')) return;
+        var row = document.createElement('div');
+        row.className = 'nav-row';
+        btn.parentNode.insertBefore(row, btn);
+        row.appendChild(btn);
+        /* IMPORTANTE: usar un <button> con go('s-home') en lugar de un
+           <a href="/"> para evitar que el navegador recargue la página
+           entera y destruya todo el estado JavaScript. Una recarga mata
+           cualquier partido live en curso (gm-modal, amistosos, etc).
+           Con go('s-home') mantenemos la SPA viva y los cronómetros
+           siguen corriendo en segundo plano. */
+        var homeBtn = document.createElement('button');
+        homeBtn.type = 'button';
+        homeBtn.className = 'home-icon-btn';
+        homeBtn.setAttribute('aria-label', 'Ir al inicio');
+        homeBtn.textContent = '🏠';
+        homeBtn.addEventListener('click', function(ev){
+          ev.preventDefault();
+          ev.stopPropagation();
+          if (typeof window.go === 'function') {
+            try { window.go('s-home'); return; } catch(_){}
+          }
+          /* Último recurso: si go no está disponible, recarga la home
+             SOLO si realmente no hay forma de navegar sin romper nada. */
+          try { window.location.hash = '#/'; } catch(_){}
+        });
+        row.appendChild(homeBtn);
+      });
+      /* Nuclear override: fuerza 80px en TODOS los cards del home */
+      var sels = [
+        '#s-home .menu-card',
+        '#s-home .equipo-card',
+        '#s-home .mc-athletic',
+        '#s-home .mc-betis',
+        '#s-home .mc-sociedad',
+        '#s-home .mc-madrid',
+        '#s-home .mc-barca'
+      ];
+      var props = ['height','min-height','max-height'];
+      sels.forEach(function(s){
+        document.querySelectorAll(s).forEach(function(el){
+          props.forEach(function(p){ el.style.setProperty(p,'80px','important'); });
+          el.style.setProperty('overflow','hidden','important');
+          el.style.setProperty('position','relative','important');
+          el.style.setProperty('box-sizing','border-box','important');
+        });
+      });
+    });
+  </script>
+</body>
+</html>
