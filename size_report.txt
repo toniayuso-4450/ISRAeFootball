@@ -1,0 +1,5 @@
+original templates/index.html: 1795.4 KB
+nuevo templates/index.html: 3.3 KB
+static/css/index.bundle.css: 97.8 KB
+static/js/index.bundle.js: 142.3 KB
+partials screens: 1346.1 KB
